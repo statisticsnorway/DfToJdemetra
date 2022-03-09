@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[15]:
+# In[1]:
 
 
 # Importing libraries
@@ -13,14 +13,14 @@ import os
 from bs4 import BeautifulSoup
 
 
-# In[16]:
+# In[2]:
 
 
 # Importing test-data
 RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
 
 
-# In[37]:
+# In[3]:
 
 
 def DfToXml(data,
@@ -46,7 +46,9 @@ def DfToXml(data,
         tsdata = ET.SubElement(ts, 'tsdata', attrib={"pstart":pstart, "ystart":ystart, "freq":freq})
         data2 = ET.SubElement(tsdata, "data")
         verdier = columnData
-        data2.text = verdier.to_string(index=False)
+        verdier2 = verdier.to_string(index=False)
+        verdier3 = verdier2.replace("\n", " ")
+        data2.text = verdier3
 
     xml_data = ET.tostring(root)  # binary string
     with open('mainpart.xml', 'w') as f:  # Write in file as utf-8
@@ -66,23 +68,11 @@ def DfToXml(data,
     return(print(BeautifulSoup(xml_data, "xml").prettify()))
 
 
-# In[40]:
+# In[4]:
 
 
 DfToXml(data = RawSeries,
         pstart = '1',
         ystart = '2016',
         freq = '12')
-
-
-# In[24]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
