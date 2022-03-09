@@ -6,9 +6,7 @@
 
 # Importing libraries
 import pandas as pd
-import numpy as np
 import xml.etree.cElementTree as ET
-import lxml
 import os
 from bs4 import BeautifulSoup
 
@@ -50,10 +48,11 @@ def DfToXml(data,
         verdier3 = verdier2.replace("\n", " ")
         data2.text = verdier3
 
-    xml_data = ET.tostring(root)  # binary string
-    with open('mainpart.xml', 'w') as f:  # Write in file as utf-8
-        f.write(xml_data.decode('utf-8'))
-
+    xml_data = ET.tostring(root)
+    xml_data2 = BeautifulSoup(xml_data, "xml").prettify()
+    with open('mainpart.xml', 'w') as f:  
+        f.write(xml_data2)
+        
     FirstLine = """<?xml version="1.0" encoding="UTF-8"?>"""
     with open("FirstLine.xml", 'w') as f:
         f.write(FirstLine)
@@ -64,8 +63,7 @@ def DfToXml(data,
     # Removes temp-files
     os.system("rm -f ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml")
     
-    # Pretty-printing for Jupyterlab
-    return(print(BeautifulSoup(xml_data, "xml").prettify()))
+    return print(xml_data2)
 
 
 # In[4]:
