@@ -84,4 +84,4 @@ DfToXml(data = RawSeries,
 
 The result in an interactive environment will look like this: 
 
-![https://github.com/statisticsnorway/DfToJdemetra/blob/main/pictures/example_xml.png]
+![](https://github.com/statisticsnorway/DfToJdemetra/blob/main/pictures/example_xml.png?raw=true)
