@@ -61,7 +61,6 @@ def DfToXml(data,
     with open("FirstLine.xml", 'w') as f:
         f.write(FirstLine)
     
-    #command = f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml"
     # Concatinating declaration with the rest. Requires Linux OS
     os.system(f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml")
 
