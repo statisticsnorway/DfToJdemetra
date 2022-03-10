@@ -81,3 +81,7 @@ DfToXml(data = RawSeries,
         ystart = '2016',
         freq = '12')
 ```
+
+The result in an interactive environment will look like this: 
+
+![https://github.com/statisticsnorway/DfToJdemetra/blob/main/pictures/example_xml.png]
