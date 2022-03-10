@@ -17,15 +17,11 @@ import pandas as pd
 RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
 ```
 
-2. Run the function: 
+2. Load the function: 
 
 ```python
-import pandas as pd
-import xml.etree.cElementTree as ET
-import os
-from bs4 import BeautifulSoup
-
 def DfToXml(data,
+            out : str,
             pstart : str,
             ystart : str,
             freq : str):
@@ -60,19 +56,26 @@ def DfToXml(data,
     FirstLine = """<?xml version="1.0" encoding="UTF-8"?>"""
     with open("FirstLine.xml", 'w') as f:
         f.write(FirstLine)
-
+    
+    #command = f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml"
     # Concatinating declaration with the rest. Requires Linux OS
-    os.system("cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/jobs.xml")
+    os.system(f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml")
 
     # Removes temp-files
     os.system("rm -f ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml")
     
     return print(xml_data2)
+```
 
+As you can see the file path in the os.system-calls are hard-coded. This will be improved shortly. In the meantime, just the write the correct path that you are using.
 
+Also, we assume that the first column in your data is date/period-column. Thats the reason we drop this in the first line of the function. This will also be improved in the near future. 
 
 3. Pass arguments to the function
 
+Our datasets consists of monthly data starting from january 2016 until january 2022. Hence we pass in these values into the arguments: 
+
+```python
 DfToXml(data = RawSeries,
         pstart = '1',
         ystart = '2016',
