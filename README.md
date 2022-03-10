@@ -17,6 +17,7 @@ import pandas as pd
 import xml.etree.cElementTree as ET
 import os
 from bs4 import BeautifulSoup
+
 RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
 ```
 
