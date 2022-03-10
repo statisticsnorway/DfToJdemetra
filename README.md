@@ -85,6 +85,6 @@ DfToXml(data = RawSeries,
         freq = '12')
 ```
 
-The result in an interactive environment will look like this: 
+You can see the [resulting file here](https://github.com/statisticsnorway/DfToJdemetra/blob/main/data/jobs.xml), or a preview in the picture below: 
 
 ![](https://github.com/statisticsnorway/DfToJdemetra/blob/main/pictures/example_xml.png?raw=true)
