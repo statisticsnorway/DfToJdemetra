@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 # Importing libraries
@@ -11,17 +11,18 @@ import os
 from bs4 import BeautifulSoup
 
 
-# In[2]:
+# In[ ]:
 
 
 # Importing test-data
 RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
 
 
-# In[3]:
+# In[ ]:
 
 
 def DfToXml(data,
+            out : str,
             pstart : str,
             ystart : str,
             freq : str):
@@ -56,9 +57,10 @@ def DfToXml(data,
     FirstLine = """<?xml version="1.0" encoding="UTF-8"?>"""
     with open("FirstLine.xml", 'w') as f:
         f.write(FirstLine)
-
+    
+    #command = f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml"
     # Concatinating declaration with the rest. Requires Linux OS
-    os.system("cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/jobs.xml")
+    os.system(f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml")
 
     # Removes temp-files
     os.system("rm -f ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml")
@@ -66,10 +68,11 @@ def DfToXml(data,
     return print(xml_data2)
 
 
-# In[4]:
+# In[ ]:
 
 
 DfToXml(data = RawSeries,
+        out = 'jobs',
         pstart = '1',
         ystart = '2016',
         freq = '12')
