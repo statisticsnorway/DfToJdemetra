@@ -64,14 +64,6 @@ def DfToXml(data,
     with open(f"{outpath}/{out}.xml", 'w') as f:
         f.write(xml_data2)
 
-    return print(xml_data2)
-
-
-DfToXml(data=RawSeries,
-        out='jobs',
-        outpath='/home/jovyan/repositories/DfToJdemetra/data',
-        pstart='1',
-        ystart='2016',
-        freq='12')
-
-
+    #return print(xml_data2)
+    return print(f"""Pandas DataFrame has been converted to an XML and has 
+    been saved at {outpath}/{out}.xml""")
