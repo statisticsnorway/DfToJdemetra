@@ -39,9 +39,10 @@ def DfToXml(data,
     # Deletes the first column since its because in our data thats a period-column
     RawSeries2 = data.drop(data.columns[0], axis=1)
     # Start building xml
-    root = ET.Element("tsworkspace", attrib={"xmlns": "eu/tstoolkit:core",
-                                          "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
-                                          "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"})
+    root = ET.Element("tsworkspace",
+                      attrib={"xmlns": "eu/tstoolkit:core",
+                              "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+                              "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"})
     timeseries = ET.SubElement(root, 'timeseries')
     tscollection = ET.SubElement(timeseries, "tscollection")
     tscollection.set('name', out)
@@ -52,7 +53,11 @@ def DfToXml(data,
         ts = ET.SubElement(data, "ts")
         navn = columnName
         ts.set('name', navn)
-        tsdata = ET.SubElement(ts, 'tsdata', attrib={"pstart": pstart, "ystart": ystart, "freq": freq})
+        tsdata = ET.SubElement(ts,
+                               'tsdata',
+                               attrib={"pstart": pstart,
+                                       "ystart": ystart,
+                                       "freq": freq})
         data2 = ET.SubElement(tsdata, "data")
         verdier = columnData
         verdier2 = verdier.to_string(index=False)
