@@ -17,8 +17,6 @@ import xml.etree.cElementTree as ET
 import os
 from bs4 import BeautifulSoup
 
-RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
-
 
 def DfToXml(data,
             out : str,
@@ -26,12 +24,24 @@ def DfToXml(data,
             pstart : str,
             ystart : str,
             freq : str):
+    """
+    Parameters:
+        data : A Pandas DataFrame you want to convert.
+        out : The name of the outputfile and attribute name in tscollection.
+        outpath : Directory you want to save the output-file.
+        pstart : The period (month, quarter) you want the sa to start in the first year.
+        ystart : Startyear of the series.
+        freq : Yearly frequency of the series. Quarterly is 4, monthly is 12, etc..
+
+    Returns:
+        An XML-file in your specified directory.
+    """
     # Deletes the first column since its because in our data thats a period-column
     RawSeries2 = data.drop(data.columns[0], axis=1)
     # Start building xml
-    root = ET.Element("tsworkspace", attrib={"xmlns" : "eu/tstoolkit:core",
-                                          "xmlns:xsd" : "http://www.w3.org/2001/XMLSchema",
-                                          "xmlns:xsi" : "http://www.w3.org/2001/XMLSchema-instance"})
+    root = ET.Element("tsworkspace", attrib={"xmlns": "eu/tstoolkit:core",
+                                          "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+                                          "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"})
     timeseries = ET.SubElement(root, 'timeseries')
     tscollection = ET.SubElement(timeseries, "tscollection")
     tscollection.set('name', out)
@@ -42,7 +52,7 @@ def DfToXml(data,
         ts = ET.SubElement(data, "ts")
         navn = columnName
         ts.set('name', navn)
-        tsdata = ET.SubElement(ts, 'tsdata', attrib={"pstart":pstart, "ystart":ystart, "freq":freq})
+        tsdata = ET.SubElement(ts, 'tsdata', attrib={"pstart": pstart, "ystart": ystart, "freq": freq})
         data2 = ET.SubElement(tsdata, "data")
         verdier = columnData
         verdier2 = verdier.to_string(index=False)
@@ -57,11 +67,11 @@ def DfToXml(data,
     return print(xml_data2)
 
 
-DfToXml(data = RawSeries,
-        out = 'jobs',
-        outpath = '/home/jovyan/repositories/DfToJdemetra/data',
-        pstart = '1',
-        ystart = '2016',
-        freq = '12')
+DfToXml(data=RawSeries,
+        out='jobs',
+        outpath='/home/jovyan/repositories/DfToJdemetra/data',
+        pstart='1',
+        ystart='2016',
+        freq='12')
 
 
