@@ -26,6 +26,7 @@ RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
 ```python
 def DfToXml(data,
             out : str,
+            outpath : str,
             pstart : str,
             ystart : str,
             freq : str):
@@ -37,7 +38,7 @@ def DfToXml(data,
                                           "xmlns:xsi" : "http://www.w3.org/2001/XMLSchema-instance"})
     timeseries = ET.SubElement(root, 'timeseries')
     tscollection = ET.SubElement(timeseries, "tscollection")
-    tscollection.set('name', 'jobs')
+    tscollection.set('name', out)
     data = ET.SubElement(tscollection, "data")
 
     # Looping through colname and series
@@ -54,25 +55,13 @@ def DfToXml(data,
 
     xml_data = ET.tostring(root)
     xml_data2 = BeautifulSoup(xml_data, "xml").prettify()
-    with open('mainpart.xml', 'w') as f:  
+    with open(f"{outpath}/{out}.xml", 'w') as f:
         f.write(xml_data2)
-        
-    FirstLine = """<?xml version="1.0" encoding="UTF-8"?>"""
-    with open("FirstLine.xml", 'w') as f:
-        f.write(FirstLine)
-    
-    # Concatinating declaration with the rest. Requires Linux OS
-    os.system(f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml")
 
-    # Removes temp-files
-    os.system("rm -f ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml")
-    
     return print(xml_data2)
 ```
 
-As you can see the file path in the os.system-calls are hard-coded. This will be improved shortly. In the meantime, just the write the correct path that you are using.
-
-Also, we assume that the first column in your data is date/period-column. Thats the reason we drop this in the first line of the function. This will also be improved in the near future. 
+OBS! The function assumes that the first column in your data is date/period-column. Thats the reason we drop this in the first line of the function. This will also be improved in the near future. 
 
 3. Pass arguments to the function
 
@@ -80,6 +69,8 @@ Our datasets consists of monthly data starting from january 2016 until january 2
 
 ```python
 DfToXml(data = RawSeries,
+        out = 'jobs',
+        outpath = '/home/jovyan/repositories/DfToJdemetra/data',
         pstart = '1',
         ystart = '2016',
         freq = '12')
