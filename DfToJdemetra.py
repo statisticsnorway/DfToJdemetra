@@ -1,28 +1,28 @@
-#!/usr/bin/env python
-# coding: utf-8
+# ---
+# jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.13.7
+#   kernelspec:
+#     display_name: Python 3 (ipykernel)
+#     language: python
+#     name: python3
+# ---
 
-# In[ ]:
-
-
-# Importing libraries
 import pandas as pd
 import xml.etree.cElementTree as ET
 import os
 from bs4 import BeautifulSoup
 
-
-# In[ ]:
-
-
-# Importing test-data
 RawSeries = pd.read_csv("./data/JobsPreliminary.csv")
-
-
-# In[ ]:
 
 
 def DfToXml(data,
             out : str,
+            outpath : str,
             pstart : str,
             ystart : str,
             freq : str):
@@ -34,7 +34,7 @@ def DfToXml(data,
                                           "xmlns:xsi" : "http://www.w3.org/2001/XMLSchema-instance"})
     timeseries = ET.SubElement(root, 'timeseries')
     tscollection = ET.SubElement(timeseries, "tscollection")
-    tscollection.set('name', 'jobs')
+    tscollection.set('name', out)
     data = ET.SubElement(tscollection, "data")
 
     # Looping through colname and series
@@ -51,29 +51,17 @@ def DfToXml(data,
 
     xml_data = ET.tostring(root)
     xml_data2 = BeautifulSoup(xml_data, "xml").prettify()
-    with open('mainpart.xml', 'w') as f:  
+    with open(f"{outpath}/{out}.xml", 'w') as f:
         f.write(xml_data2)
-        
-    FirstLine = """<?xml version="1.0" encoding="UTF-8"?>"""
-    with open("FirstLine.xml", 'w') as f:
-        f.write(FirstLine)
-    
-    #command = f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml"
-    # Concatinating declaration with the rest. Requires Linux OS
-    os.system(f"cat ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml > ./data/{out}.xml")
 
-    # Removes temp-files
-    os.system("rm -f ~/repositories/DfToJdemetra/FirstLine.xml ~/repositories/DfToJdemetra/mainpart.xml")
-    
     return print(xml_data2)
-
-
-# In[ ]:
 
 
 DfToXml(data = RawSeries,
         out = 'jobs',
+        outpath = '/home/jovyan/repositories/DfToJdemetra/data',
         pstart = '1',
         ystart = '2016',
         freq = '12')
+
 
