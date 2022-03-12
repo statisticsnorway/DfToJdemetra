@@ -68,12 +68,12 @@ OBS! The function assumes that the first column in your data is date/period-colu
 Our datasets consists of monthly data starting from january 2016 until january 2022. Hence we pass in these values into the arguments: 
 
 ```python
-DfToXml(data = RawSeries,
-        out = 'jobs',
-        outpath = '/home/jovyan/repositories/DfToJdemetra/data',
-        pstart = '1',
-        ystart = '2016',
-        freq = '12')
+DfToXml(data=RawSeries,
+        out='jobs',
+        outpath='/home/jovyan/repositories/DfToJdemetra/data',
+        pstart='1',
+        ystart='2016',
+        freq='12')
 ```
 
 You can see the [resulting file here](https://github.com/statisticsnorway/DfToJdemetra/blob/main/data/jobs.xml), or a preview in the picture below: 
